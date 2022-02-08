@@ -4,9 +4,11 @@ import type { AppProps } from 'next/app'
 import store from '../Services/store'
 import {Provider} from "react-redux"
 
+import axios from "axios"
+axios.defaults.baseURL = "http://localhost:3333"
+
 store.subscribe(()=>{
   console.log(store.getState());
-  
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -17,9 +19,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <Component {...pageProps} />
 
-      </Provider>
+    </Provider>
     </>
-
   )
 }
 

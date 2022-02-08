@@ -1,10 +1,12 @@
-const initialState = 0;
+import { decrement, increment } from "../ActionTypes/actionTypes";
+
+const initialState = 10;
 
 const changeNumber = (state = initialState, action: { type: string; param: number; })=>{
-    if (action.type === "INREMENT") {
+    if (action.type === increment) {
         return state + action.param;
     }
-    else if (action.type === "DECREMENT") {
+    else if (action.type === decrement) {
         return state - 1;
     }
     else{

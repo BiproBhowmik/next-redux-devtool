@@ -1,11 +1,14 @@
+import { decrement, increment, storeArray } from "../ActionTypes/actionTypes"
+
 export const incNum = (num: any)=>{
     return {
-        type: "INREMENT",
+        type: increment,
         param: num,
     }
 }
+
 export const decNum = ()=>{
     return {
-        type: "DECREMENT"
+        type: decrement
     }
 }
