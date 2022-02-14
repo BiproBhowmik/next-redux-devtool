@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteData, insertData, storeAllData } from '../Services/Actions/arrayActions';
-import { deleteTodo, getAllTodoList, insertTodo } from '../Methods/todoMethods'
+import {deleteTodo, getAllTodoList, insertTodo} from '../Methods/todoMethods'
 import useGetTodo from '../CustomHokes/useGetTodo';
 
 export default function todo() {
@@ -9,7 +9,7 @@ export default function todo() {
   const [userData, setuserData] = useState({
     name: "",
     age: ""
-  });
+  })
 
   const dispatch = useDispatch();
 
@@ -19,23 +19,13 @@ export default function todo() {
 
   const [todoStateData, setTodoStateData] = useState([]);
 
-  const pro = useGetTodo("/getTodos"); //Custom Hook
+  const promise = useGetTodo("/getTodos"); //Custom Hook
+  promise.then((res)=>{
+    setTodoStateData(res);
+  })
 
-  // console.log(pro);
-
-  useMemo(() => {
-    // const pro = useGetTodo();
-    // console.log(pro);
-    
-    pro.then((res) => {
-      setTodoStateData(res);
-    })
-    console.log(pro);
-  }, []);
+  // console.log(useGetTodo());
   
-  // pro.then((res)=>{
-  //   setTodoStateData(res);
-  // })
 
   // const showTodos = todoState.array.map((item: any, index: number) => {
   const showTodos = todoStateData.map((item: any, index: number) => {
@@ -62,17 +52,14 @@ export default function todo() {
   const handleClick = async () => {
     if (userData.name && userData.age) {
 
-
       const data = await insertTodo({ ...userData })
-      setTodoStateData(todoStateData)
-
+      
       if (data) {
-        // dispatch(insertData([data]));
-        setTodoStateData([data].concat(todoStateData));
+        dispatch(insertData([data]));
         clearState();
       }
     } else {
-      alert("Empty Fild Is Not Allowed!!");
+      alert("Empty Fild Is Not Allowed!!")
     }
   }
 
@@ -92,6 +79,7 @@ export default function todo() {
 
   return (
     <>
+    <h1>Another Page</h1>
       <div>
         <input type="text" placeholder='Name' name='name' value={userData.name} onChange={(e) => handleChange(e)} />
         <input min={0} type="number" placeholder='Age' name='age' value={userData.age} onChange={(e) => handleChange(e)} />
